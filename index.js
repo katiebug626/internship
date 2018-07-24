@@ -20,7 +20,31 @@ exports.handler = (event, context, callback) => {
         Bucket: bucket,
         Key: key,
     };
-
+    
+  //new code working with promises (need to do more research)
+    s3.getObject(params){
+      return new Promise(function(resolve, reject){
+        getObject(params, function(err,results){
+          if (err){
+            reject(err);
+          }
+          else{
+            console.log(`Content Type:`, data.ContentType);
+            console.log(`Event received. Bucket: ${bucket}, Key: ${key}.`);
+            var param = {
+                Image: {
+                S3Object: {
+                Bucket: bucket, 
+                Name: key
+                }
+            },
+            MaxLabels: 10,
+            MinConfidence: 50
+            };
+        
+        
+  // end of new code
+  
     // Get the object from the event and show its content type
     s3.getObject(params, (err, data) => {
         if (err) {
